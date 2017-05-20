@@ -1,0 +1,101 @@
+class Sort extends React.Component {
+  sort(field){
+    this.props.sortBy(field);
+  }
+render() {
+  
+  var allTimeArr=[];
+  var recentArr=[];
+  var allTime=document.getElementById('allTime');
+  var allTime2=document.getElementById('allTime2');
+   
+  var recent=document.getElementById('recent');
+  var recent2=document.getElementById('recent2');
+  var list=document.getElementById('list');
+  var list2=document.getElementById('list2');
+  var listBool=true;
+  var listContent='https://fcctop100.herokuapp.com/api/fccusers/top/alltime';
+   
+      
+$.getJSON(listContent, function(data) {
+  
+  for (var x=0;x<=101;x++){
+  list2.innerHTML=""
+  list.innerHTML+=('<br>'+(x+1)+"."+data[x].username+"\u00A0")
+    
+  allTime.innerHTML+=  ('<br>'+data[x].alltime+"\u00A0");
+  
+  
+  recent.innerHTML+='<br>'+data[x].recent+"\u00A0";
+  }
+})
+   allTime.onclick=function(){
+    
+    
+  
+ 
+  if (list2.innerHTML!="")
+    return (
+      
+$.getJSON(listContent, function(data) {
+  
+  for (var x=0;x<=101;x++){
+  list2.innerHTML=""
+  list.innerHTML+=('<br>'+(x+1)+"."+data[x].username+"\u00A0")
+    
+    allTime2.innerHTML=""
+  allTime.innerHTML+=  ('<br>'+data[x].alltime+"\u00A0");
+  
+  recent2.innerHTML=""
+  recent.innerHTML+='<br>'+data[x].recent+"\u00A0";
+  }
+  
+})
+
+    )}
+  
+  recent.onclick=function(){
+    
+    
+  
+ 
+  if (list.innerHTML!="")
+    return (
+      
+$.getJSON('https://fcctop100.herokuapp.com/api/fccusers/top/recent', function(data) {
+  
+  for (var x=0;x<=101;x++){
+  list.innerHTML=""
+  list2.innerHTML+=('<br>'+(x+1)+"."+data[x].username+"\u00A0")
+    
+    
+    
+    allTime.innerHTML="All Time Points"
+    
+    allTime.style.position = "relative";
+    allTime.style.left = "120px";
+    allTime.style.cssFloat = "left";
+   
+  allTime2.innerHTML+=  ('<br>'+data[x].alltime+"\u00A0");
+  
+  recent.innerHTML="Recent"
+    recent.style.position = "relative";
+    recent.style.left = "250px";
+    
+    recent.style.cssFloat = "left";
+  recent2.innerHTML+='<br>'+data[x].recent+"\u00A0";
+    
+  }
+  
+})
+
+    )}
+
+}
+  
+}
+
+ReactDOM.render(
+  <Sort />,
+  document.getElementById('root')
+);
